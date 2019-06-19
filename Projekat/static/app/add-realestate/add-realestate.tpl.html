@@ -1,0 +1,35 @@
+<h1 style="align-content:center;">Add real estate</h1>
+
+    <div class="alert alert-danger" role="alert" ng-if="unosNekretnine.$invalid">
+        Form is not valid!
+    </div>
+    <form name="unosNekretnine" ng-submit="unosNekretnine.$valid && ar.appendRealestate()">
+        <div class="form-group">
+            <label for="naslov">Title</label>
+            <input type="text" class="form-control" ng-class="{'is-invalid': unosNekretnine.naslov.$invalid}" id="naslov" name="naslov" aria-describedby="naslov"
+                placeholder="Unesite naslov" ng-model="ar.novi.title" ng-required="true">
+        </div>
+        <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" class="form-control" ng-class="{'is-invalid': unosNekretnine.lokacija.$invalid}" id="lokacija" name="lokacija" placeholder="Unesite lokacija"
+                ng-model="ar.novi.location" ng-required="true">
+        </div>
+
+        <div class="form-group">
+            <label for="cena">Price</label>
+            <input type="text" class="form-control" ng-class="{'is-invalid': unosNekretnine.cena.$invalid}" id="cena" name="cena" placeholder="Unesite cenu nekretnine"
+                ng-model="ar.novi.price" ng-required="true">
+        </div>
+        <div class="form-group">
+            <label for="datum">Details</label>
+            <textarea class="form-control"  id="info" name="info" placeholder="Unesite jos informacija o nekretnini(opciono)" ng-model="ar.novi.other_info"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="imageSrc">Path to image</label>
+            <input type="text" class="form-control" id="imageSrc" name="imageSrc" placeholder="Unesite putanju do slike nekretnine" ng-model="ar.novi.image_src" 
+            ng-class="{'is-invalid': unosNekretnine.imageSrc.$invalid}" ng-required="true" >
+        </div>
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" ng-disabled="unosNekretnine.$invalid" value="Add">
+        </div>
+    </form>

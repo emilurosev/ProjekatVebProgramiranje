@@ -1,0 +1,122 @@
+<form class="form-inline mt-2 mt-md-0" ng-submit="ln.dobaviNekretninuPoNaslovu(ln.trazeno); ln.trazi()">
+    <input class="form-control mr-sm-2" placeholder="Search" aria-label="Search" type="text" ng-model="ln.trazeno">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+</form>
+
+<div style="margin-top: 20px" ng-if="ln.pretragaBool==true">
+    <h5>Search results: </h5>
+    <div ng-repeat="nekretnina in ln.pretragaNekretninaPoNaslovu track by $index">
+        {{nekretnina.title}}
+    </div>
+</div>
+
+<hr>
+
+
+<div ng-repeat="nekretnina in ln.nekretnine track by $index">
+    <div class="btn-group float-right">
+
+        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#prikaziModal" ng-click="ln.dobaviNekretninu(nekretnina.id); ln.dobaviKorisnika(nekretnina.user_id)"> Detailed view</button>
+        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#izmeniModal"  ng-show="nekretnina.user_id == ln.loggedInUser.id || ln.admin" ng-click="ln.pripremiZaIzmenu(nekretnina)"> Change</button>
+        <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#izbrisiModal" ng-show="nekretnina.user_id == ln.loggedInUser.id || ln.admin " ng-click="ln.ukloni(nekretnina.id)">
+            <span aria-hidden="true">&times;</span> Delete</button>
+    </div>
+    <h1>{{nekretnina.title}}</h1>
+    <h5>{{nekretnina.location}}</h5>
+    <p>{{nekretnina.price}}</p>
+    <img class="rounded mx-auto d-block slikeNekretnina" ng-src="{{nekretnina.image_src}}" alt="Slika" width="200" height="200">
+    <hr>
+    
+</div>
+
+
+
+<div class="modal fade" id="prikaziModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">{{ln.nekretnina.title}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p><span class="font-italic">Location: </span>{{ln.nekretnina.location}}</p>
+            <p><span class="font-italic">Price: </span>{{ln.nekretnina.price}}</p>
+            <p><span class="font-italic">Email of owner: </span>{{ln.korisnik.email}}</p>
+            <p><span class="font-italic">Details: </span>{{ln.nekretnina.other_info}}</p>
+            <img class="rounded mx-auto d-block" ng-src="{{ln.nekretnina.image_src}}" alt="Slika" width="450" height="450">
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="izmeniModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Change a real estate</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+            <form id="izmenaID" name="izmenaNekretnine" ng-submit="izmenaNekretnine.$valid && ln.izmeniNekretninu()">
+                <div class="form-group">
+                    <label for="naslov">Title</label>
+                    <input type="text" class="form-control" ng-class="{'is-invalid': izmenaNekretnine.naslov.$invalid}" id="naslov" name="naslov"
+                        aria-describedby="naslov" placeholder="Naslov" ng-model="ln.zaIzmenu.title" ng-required="true">
+                </div>
+                <div class="form-grouop">
+                    <label for="lokacija">Location</label>
+                    <input type="text" class="form-control" ng-class="{'is-invalid': izmenaNekretnine.lokacija.$invalid}" id="lokacija" name="lokacija"
+                        aria-describedby="lokacija" placeholder="Lokacija" ng-model="ln.zaIzmenu.location" ng-required="true">
+                </div>
+                <div class="form-grouop">
+                    <label for="cena">Price</label>
+                    <input type="text" class="form-control" ng-class="{'is-invalid': izmenaNekretnine.cena.$invalid}" id="cena" name="cena"
+                        aria-describedby="cena" placeholder="Cena" ng-model="ln.zaIzmenu.price" ng-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="info">Details</label>
+                    <textarea class="form-control" id="info" name="info" placeholder="Informacije o nekretnini" ng-model="ln.zaIzmenu.other_info"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="imageSrc">Path to image</label>
+                    <input type="text" class="form-control" id="imageSrc" name="imageSrc" placeholder="Putanja do slike" ng-model="ln.zaIzmenu.image_src" 
+                        ng-class="{'is-invalid': izmenaNekretnine.imageSrc.$invalid}" ng-required="true" aria-describedby="imageSrc">
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            <button id="izmeniButton" type="submit" class="btn btn-primary" form="izmenaID" ng-disabled="izmenaNekretnine.$invalid">Change</button>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div class="modal fade" id="izbrisiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Notice</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+        Real estate is deleted!
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+    </div>
+</div>
+
+
+

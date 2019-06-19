@@ -1,0 +1,53 @@
+<div ng-show="!up.enableEdit">
+    <div class="container1">
+            <h2><span class="badge badge-pill badge-warning">Username</span>: {{up.loggedInUser.username}}</h2>
+            <br>
+            <h2><span class="badge badge-pill badge-warning">First name</span>: {{up.loggedInUser.first_name}}</h2>
+            <br>
+            <h2><span class="badge badge-pill badge-warning">Last name</span>: {{up.loggedInUser.last_name}}</h2>
+            <br>
+            <h2><span class="badge badge-pill badge-warning">Email</span>: <i>{{up.loggedInUser.email}}</i></h2>
+            <br>
+            <h2><span class="badge badge-pill badge-warning">Type</span>: {{up.loggedInUser.type}}</h2>
+            <br>
+            <button class="btn btn-warning" type="submit" value="Edit" style="float:right;width:20%;" ng-click="up.prepareUserEdit()">Edit <span class="glyphicon glyphicon-pencil"></span> </button>
+            <!-- <div class="userlogo">
+                <img class="clearfix" ngf-thumbnail="up.that.forEditUser.newAvatar || '../media/images/' + up.loggedInUser.avatar">
+               
+                     <img class="float-left mr-3" src="media/images/{{up.loggedInUser.path}}">
+            </div> -->
+          </div>
+</div>
+
+<div class="container2" ng-show="up.enableEdit">
+    <h1 class="post-create-header">Edit your Information</h1>
+    <form name="editUser" ng-submit="up.editUser()" method="PUT">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Username..." ng-model="up.forEditUser.username" required>
+            <i ng-show="editUser.title.$error.required" style="color:red">Username name is required</i>
+        </div>
+        <div class="form-group">
+            <label for="firstname">First name</label>
+            <input type="text" class="form-control" id="firstname" name="firstname" placeholder="first name..." ng-model="up.forEditUser.first_name" required>
+            <i ng-show="editUser.content.$error.required" style="color:red">*a First name is required</i>
+        </div>
+        <div class="form-group">
+            <label for="lastname">Lastname</label>
+            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="last name..." ng-model="up.forEditUser.last_name" required>
+            <i ng-show="editUser.content.$error.required" style="color:red">*a Last name is required</i>
+        </div>
+        <div class="form-group">
+            <label for="Email">Email</label>
+            <input type="text" class="form-control" id="Email" name="Email" placeholder="Email..." ng-model="up.forEditUser.email" required>
+            <i ng-show="editUser.content.$error.required" style="color:red">*an email is required</i>
+        </div>
+        <!-- <div class="form-group">
+            <div class="btn btn-warning" style="widows: 18%;" ngf-select ng-model="up.that.forEditUser.newAvatar" name="avatar" ngf-pattern="'image/*'" ngf-accept="'image/*'">Change Avatar</div>
+        </div> -->
+        <div class="container-button">
+            <button class="btn btn-warning glyphicon glyphicon-ok" type="submit" value="Edit" style="float:left;width:18%;"> Confirm</button>
+            <button class="btn btn-warning glyphicon glyphicon-arrow-left" type="reset" value="Reset" style="float:right;width:18%" ng-click="up.cancelEditUser();"> Back</button>
+        </div>
+    </form>
+</div>

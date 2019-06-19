@@ -1,0 +1,29 @@
+<div class="container2">
+    <h2 class="form-signin-heading">Registration</h2>
+  
+    <form class="form-signin" name="registerForm" ng-submit="rc.appendUser()">
+      <label for="inputName">Name</label>
+      <input type="text" id="inputName" class="form-control" placeholder="Name..." required="" autofocus="" style="margin-bottom:25px"
+        ng-model="rc.novi.first_name">
+      <label for="inputlastname">Lastname</label>
+      <input type="text" id="inputlastname" class="form-control" placeholder="lastname..." required="" style="margin-bottom:25px"
+        ng-model="rc.novi.last_name">
+  
+      <label for="inputEmail">Email</label>
+      <input type="email" id="inputEmail" class="form-control" placeholder="someone@yahoo.com" required="" style="margin-bottom:25px"
+        ng-model="rc.novi.email">
+      <label for="inputUsername">Username</label>
+      <input type="text" id="inputUsername" class="form-control" placeholder="Username..." required="" style="margin-bottom:25px"
+        ng-model="rc.novi.username">
+  
+      <label for="inputPassword1">Password</label>
+      <input type="password" class="form-control" id="novi.passw" name="novi.passw" ng-model="rc.novi.passw" required=""
+        placeholder="Password..." style="margin-bottom:25px">
+      <label for="inputPassword2">Re-enter Password</label>
+      <input type="password" class="form-control" id="passwordcheck" name="passwordcheck" ng-model="rc.passwordcheck" required=""
+        placeholder="Re-enter..." style="margin-bottom:25px">
+      <i ng-show="rc.passwordMatch()" style="color:red;">Passwords have to match!</i>
+      <button class="btn btn-warning" type="submit"style="display:inline-block;float:left;width:30%;" ng-disabled="registerForm.$invalid">Register</button>
+      <button class="btn btn-warning" type="reset" value="Reset"style="display:inline-block;float:right;width:25%;">Reset</button>
+    </form>
+  </div>

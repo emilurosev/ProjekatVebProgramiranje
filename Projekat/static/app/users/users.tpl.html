@@ -1,0 +1,11 @@
+<div style="text-align: center">
+    <h5 id="listOfUsers">List of users</h5>
+    <hr>
+    <div ng-repeat="korisnik in uc.korisnici track by $index">
+        <h6 class="user">User with id {{korisnik.id}}</h6>
+        <p>username: {{korisnik.username}}</p>
+        <p>email: {{korisnik.email}}</p>
+        <button ng-show="korisnik.id != uc.loggedInUser.id" class="btn btn-outline-danger"  ng-click="uc.izbrisiKorisnika(korisnik.id)">Remove user</button>
+        <hr>
+    </div>
+</div>
